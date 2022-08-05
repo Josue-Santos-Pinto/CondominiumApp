@@ -5,6 +5,7 @@ import C from './style'
 import {useStateValue} from '../../context/StateContext'
 import api from '../../services/api'
 
+
 export default () => {
     const navigation = useNavigation()
     const [context, dispatch] = useStateValue()
@@ -53,10 +54,20 @@ export default () => {
         checkLogin()
     },[])
 
+    //TEMPORARIO
+    const handleLogoutButton = async () => {
+       api.logout()
+        navigation.reset({
+            index: 1,
+            routes: [{name:'LoginScreen'}]
+        })
+    }
+
 
     return (
         <C.Container>
             <C.LoadingIcon color='#8863E6' size='large' />
+            <C.Button  title='Sair' onPress={handleLogoutButton} />
         </C.Container>
     )
 }
