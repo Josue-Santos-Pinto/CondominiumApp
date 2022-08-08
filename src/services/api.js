@@ -36,7 +36,6 @@ const request = async (method,endpoint,params,token = null) => {
 
 }
 
-
 export default {
     getToken: async () => {
         return await AsyncStorage.getItem('token')
@@ -54,6 +53,7 @@ export default {
         let token = await AsyncStorage.getItem('token')
         let json = await request('post','/auth/logout',{},token)
         await AsyncStorage.removeItem('token')
+        await AsyncStorage.removeItem('property')
         return json
     },
     register: async (name,cpf,email,password,password_confirm) => {
