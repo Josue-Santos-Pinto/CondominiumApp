@@ -1,78 +1,79 @@
-import React,{useState, useEffect} from "react";
-import { useNavigation } from "@react-navigation/native";
-import C from './style'
+import React, { useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import C from './style';
 
-import {useStateValue} from '../../context/StateContext'
-import api from '../../services/api'
+import { useStateValue } from '../../contexts/StateContext';
+import api from '../../services/api';
 
 export default () => {
-    const navigation = useNavigation()
-    const [context, dispatch] = useStateValue()
+    const navigation = useNavigation();
+    const [context, dispatch] = useStateValue();
 
-    const [name,setName] = useState('')
-    const [cpf, setCpf] = useState('')
-    const [email,setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [passwordConfirm, setPasswordConfirm] = useState('')
+    const [name, setName] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
 
     useEffect(()=>{
         navigation.setOptions({
-            headerTitle: 'Fazer Cadastro'
-        })
-    },[])
+            headerTitle: 'Fazer cadastro'
+        });
+    }, []);
 
     const handleRegisterButton = async () => {
-        if(name && cpf && email && password && passwordConfirm){
-            let result = await api.register(name,cpf,email,password,passwordConfirm)
-            if(result.error === ''){
-                dispatch({ type:'setToken', payload: { token: result.token}})
-                dispatch({ type: 'setUser', payload: {user: result.user}})
+        if(name && email && cpf && password && passwordConfirm) {
+            let result = await api.register(name, email, cpf, password, passwordConfirm);
+            if(result.error === '') {
+                dispatch({type: 'setToken', payload: {token: result.token}});
+                dispatch({type: 'setUser', payload: {user: result.user}});
 
                 navigation.reset({
                     index: 1,
                     routes:[{name: 'ChoosePropertyScreen'}]
-                })
+                });
             } else {
-                alert(result.error)
+                alert(result.error);
             }
         } else {
-            alert('Preencha os Campos')
+            alert("Preencha os campos");
         }
     }
 
     return (
         <C.Container>
-            <C.Field 
-                placeholder='Digite seu Nome Completo'
+            <C.Field
+                placeholder="Digite seu Nome Completo"
                 value={name}
-                onChangeText={(t)=>setName(t)}
+                onChangeText={t=>setName(t)}
             />
-            <C.Field 
-                placeholder='Digite seu CPF'
-                keyboardType='numeric'
+            <C.Field
+                placeholder="Digite seu CPF"
+                keyboardType="numeric"
                 value={cpf}
-                onChangeText={(t)=>setCpf(t)}
+                onChangeText={t=>setCpf(t)}
             />
-              <C.Field 
-                placeholder='Digite seu Email'
+            <C.Field
+                placeholder="Digite seu E-mail"
                 value={email}
-                onChangeText={(t)=>setEmail(t)}
+                onChangeText={t=>setEmail(t)}
             />
-            <C.Field 
-                placeholder='Digite sua Senha'
+            <C.Field
+                placeholder="Digite sua Senha"
                 secureTextEntry={true}
                 value={password}
-                onChangeText={(t)=>setPassword(t)}
+                onChangeText={t=>setPassword(t)}
             />
-            <C.Field 
-                placeholder='Confirme sua Senha'
+            <C.Field
+                placeholder="Digite sua Senha novamente"
                 secureTextEntry={true}
                 value={passwordConfirm}
-                onChangeText={(t)=>setPasswordConfirm(t)}
+                onChangeText={t=>setPasswordConfirm(t)}
             />
+
             <C.ButtonArea onPress={handleRegisterButton}>
                 <C.ButtonText>CADASTRAR-SE</C.ButtonText>
             </C.ButtonArea>
         </C.Container>
-    )
+    );
 }

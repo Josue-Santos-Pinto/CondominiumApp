@@ -1,7 +1,7 @@
-import styled from "styled-components/native";
+import styled from 'styled-components/native';
 
 export default {
-    Container : styled.View`
+    Container: styled.SafeAreaView`
         flex: 1;
         background-color: #F5F6FA;
     `,
@@ -47,5 +47,5 @@ export default {
         color: #000;
         font-size: 15px;
         font-weight: bold;
-    `,
-}
+    `
+};
