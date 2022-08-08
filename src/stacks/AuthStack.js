@@ -5,6 +5,7 @@ import PreloadScreen from '../screens/PreloadScreen'
 import LoginScreen from '../screens/LoginScreen'
 import RegisterScreen from '../screens/RegisterScreen'
 import ChoosePropertyScreen from '../screens/ChoosePropertyScreen'
+import MainDrawer from "../stacks/MainDrawer";
 
 const Stack = createStackNavigator()
 
@@ -32,9 +33,14 @@ export default () => {
                 component={RegisterScreen}
                 options={{headerShown: true}}
             />
-             <Stack.Screen 
+            <Stack.Screen 
                 name='ChoosePropertyScreen'
                 component={ChoosePropertyScreen}
+                options={{headerShown: false}}
+            />
+            <Stack.Screen 
+                name='MainDrawer'
+                component={MainDrawer}
                 options={{headerShown: false}}
             />
         </Stack.Navigator>
